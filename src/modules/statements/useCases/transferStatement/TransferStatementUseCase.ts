@@ -4,14 +4,7 @@ import { TransferStatementError } from "./TransferStatementError";
 import { OperationType, Statement } from "../../entities/Statement"
 import { ICreateStatementDTO } from "../createStatement/ICreateStatementDTO";
 import { IUsersRepository } from "../../../users/repositories/IUsersRepository";
-
-interface IRequest {
-  amount: number
-  description: string
-  sender_id: string
-  receiver_id: string
-  type: OperationType
-}
+import { ITransferStatementDTO } from "./ITransferStatementDTO";
 
 @injectable()
 class TransferStatementUseCase {
@@ -22,7 +15,7 @@ class TransferStatementUseCase {
     @inject("StatementsRepository")
     private statementsRepository: IStatementsRepository) {}
 
-  async execute({ amount, description, type, receiver_id, sender_id }: IRequest): Promise<void> {
+  async execute({ amount, description, type, receiver_id, sender_id }: ITransferStatementDTO): Promise<void> {
     const user_sender = await this.usersRepository.findById(sender_id);
     const user_receiver = await this.usersRepository.findById(receiver_id);
 
